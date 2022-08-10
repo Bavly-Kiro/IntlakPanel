@@ -3,7 +3,7 @@ import 'package:intlakpanel/screens/home-panel-sceen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  //mina mamdouh
+  //bavly
   runApp(const MyApp());
 }
 
