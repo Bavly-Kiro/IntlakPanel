@@ -7,13 +7,12 @@ import 'package:intlakpanel/widget/helper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../widget/buttons.dart';
 import '../widget/form_filed.dart';
 import '../widget/show_date_teacher.dart';
 
 class TeacherScreen extends StatefulWidget {
-  TeacherScreen({Key? key}) : super(key: key);
+  const TeacherScreen({Key? key}) : super(key: key);
 
   @override
   State<TeacherScreen> createState() => _TeacherScreenState();
@@ -21,11 +20,11 @@ class TeacherScreen extends StatefulWidget {
 
 class _TeacherScreenState extends State<TeacherScreen> {
   bool isAdd=false;
-  bool isEdit=true;
+  bool isShow=true;
   void changeAddCommittees(){
     setState(() {
       isAdd=true;
-      isEdit=false;
+      isShow=false;
     });
 
   }
@@ -33,7 +32,7 @@ class _TeacherScreenState extends State<TeacherScreen> {
   void changeEditCommittees(){
     setState(() {
       isAdd=false;
-      isEdit=true;
+      isShow=true;
     });
   }
 
@@ -44,7 +43,7 @@ class _TeacherScreenState extends State<TeacherScreen> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Center(
-          child: TextUnit(text: 'Professor',
+          child: TextUnit(text: 'Teacher',
               color: mainColor,
               size: 25,
               fontWeight: FontWeight.bold),
@@ -65,7 +64,7 @@ class _TeacherScreenState extends State<TeacherScreen> {
                 const SizedBox(width: 10,),
                 ElevatedButton(
                   onPressed: ()=>changeEditCommittees(),
-                  child:const  Text('Date And Edit'),
+                  child:const  Text('Show'),
                 ),
 
 
@@ -78,7 +77,7 @@ class _TeacherScreenState extends State<TeacherScreen> {
           child: Padding(
             padding: const EdgeInsets.all(30),
             child: isAdd?
-            const AddTeacher():const EditProfessor(),
+            const AddTeacher():const ShowTeacher(),
           ),
         ),)
       ],
@@ -266,8 +265,8 @@ class _AddTeacherState extends State<AddTeacher> {
 
 
 
-class EditProfessor extends StatelessWidget {
-  const EditProfessor({Key? key}) : super(key: key);
+class ShowTeacher extends StatelessWidget {
+  const ShowTeacher({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

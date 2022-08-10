@@ -3,8 +3,8 @@ import 'package:intlakpanel/units/constants.dart';
 import 'package:intlakpanel/widget/buttons.dart';
 import 'package:intlakpanel/widget/form_filed.dart';
 import 'package:intlakpanel/widget/helper.dart';
-import 'package:intlakpanel/widget/show_date_details_school.dart';
 import 'package:flutter/material.dart';
+import 'package:intlakpanel/widget/selected_textform.dart';
 
 class DetailsSchoolScreen extends StatefulWidget {
   const DetailsSchoolScreen({Key? key}) : super(key: key);
@@ -12,7 +12,6 @@ class DetailsSchoolScreen extends StatefulWidget {
   @override
   State<DetailsSchoolScreen> createState() => _DetailsSchoolScreenState();
 }
-
 class _DetailsSchoolScreenState extends State<DetailsSchoolScreen> {
    bool isCountry=true;
    bool isMajor=false;
@@ -118,7 +117,6 @@ class CountryScreen extends StatefulWidget {
   @override
   State<CountryScreen> createState() => _CountryScreenState();
 }
-
 class _CountryScreenState extends State<CountryScreen> {
   late final TextEditingController countryArController=TextEditingController(text: '');
   late final TextEditingController countryEnController=TextEditingController(text: '');
@@ -132,18 +130,18 @@ class _CountryScreenState extends State<CountryScreen> {
   var editFormKey=GlobalKey<FormState>();
 
   bool isAdd=false;
-   bool isEdit=true;
+   bool isShow=true;
    void changeAdd(){
      setState(() {
        isAdd=true;
-       isEdit=false;
+       isShow=false;
      });
 
    }
    void changeEdit(){
      setState(() {
        isAdd=false;
-       isEdit=true;
+       isShow=true;
      });
    }
 
@@ -176,11 +174,12 @@ class _CountryScreenState extends State<CountryScreen> {
               const SizedBox(width: 10,),
               ElevatedButton(
                 onPressed: changeEdit,
-                child:const  Text('Edit'),
+                child:const  Text('Show'),
               ),
             ],
           ),
         ),
+
         Expanded(child:
         Padding(
           padding: const EdgeInsets.all(30),
@@ -201,76 +200,27 @@ class _CountryScreenState extends State<CountryScreen> {
                       ),
                       Expanded(
                         child: TheFormFiled(
-                          controller:countryArController,
+                          controller:countryEnController,
                           hintText: 'Country En',
                           mixLine: 1,
                         ),
                       ),
                       Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            controller: codeCountryController,
-                            maxLines: 1,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 20
-                            ),
-                            validator: (value){
-                              if(value!.isEmpty){
-                                return 'Please Enter The date';
-                              }
-                              return null;
-                            },
-                            decoration:   InputDecoration(
-                                hintText: 'Code Country',
-                                hintStyle:   const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20
-                                ),
-                                suffixIcon: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: DropdownButtonHideUnderline(
-                                      child: DropdownButton<String>(
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                        ),
-                                        onChanged: (value) {},
-                                        hint: const Text('Select '),
-                                        items:  [
-                                          ...codeCountry.map((e){
-                                            return DropdownMenuItem(
-                                              value: e,
-                                              onTap: (){
-                                                setState(() {
-                                                  value=e;
-                                                  editCodeCountryController.text=e;
-                                                });
-                                              },
-                                              child:   Text(e),
-                                            );
-
-                                          }),
-                                        ],
-                                      )),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: const BorderSide(
-                                        color: Colors.grey,
-                                        width: 1
-                                    )
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide:  BorderSide(
-                                        color: mainColor,
-                                        width: 1
-                                    )
-                                )
-                            ),
-                          ),
+                        child: SelectedFormFiled(
+                          hintText:'Code Country' ,
+                          controller:codeCountryController ,
+                          list: [ ...codeCountry.map((e){
+                            return DropdownMenuItem(
+                              value: e,
+                              onTap: (){
+                                setState(() {
+                                  value=e;
+                                  codeCountryController.text=e;
+                                });
+                              },
+                              child:   Text(e),
+                            );
+                          })],
                         ),
                       ),
                     ],
@@ -282,6 +232,7 @@ class _CountryScreenState extends State<CountryScreen> {
               ),
             ),
           ) :
+
            ListView.builder(
               shrinkWrap: true,
               itemCount: 10,
@@ -376,70 +327,22 @@ class _CountryScreenState extends State<CountryScreen> {
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
-                                            TextFormField(
-                                              controller: editCodeCountryController,
-                                              maxLines: 1,
-                                              style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 20
-                                              ),
-                                              validator: (value){
-                                                if(value!.isEmpty){
-                                                  return 'Please Enter The date';
-                                                }
-                                                return null;
-                                              },
-                                              decoration:   InputDecoration(
-                                                  hintText: 'Code Country',
-                                                  hintStyle:   const TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 20
-                                                  ),
-                                                  suffixIcon: Padding(
-                                                    padding: const EdgeInsets.all(8.0),
-                                                    child: DropdownButtonHideUnderline(
-                                                      child: DropdownButton<String>(
-                                                          style: const TextStyle(
-                                                            color: Colors.black,
-                                                            fontSize: 18,
-                                                          ),
-                                                          onChanged: (value) {},
-                                                          hint: const Text('Select '),
-                                                          items: [
-                                                            ...codeCountry.map((e){
-                                                              return DropdownMenuItem(
-                                                                value: e,
-                                                                onTap: (){
-                                                                  setState(() {
-                                                                    value=e;
-                                                                    editCodeCountryController.text=e;
-                                                                  });
-                                                                },
-                                                                child:   Text(e),
-                                                              );
-
-                                                            }),
-                                                          ]
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  enabledBorder: OutlineInputBorder(
-                                                      borderRadius: BorderRadius.circular(12),
-                                                      borderSide: const BorderSide(
-                                                          color: Colors.grey,
-                                                          width: 1
-                                                      )
-                                                  ),
-                                                  focusedBorder: OutlineInputBorder(
-                                                      borderRadius: BorderRadius.circular(12),
-                                                      borderSide:  BorderSide(
-                                                          color: mainColor,
-                                                          width: 1
-                                                      )
-                                                  )
-                                              ),
+                                            SelectedFormFiled(
+                                              hintText:'Code Country' ,
+                                              controller:editCodeCountryController ,
+                                              list: [ ...codeCountry.map((e){
+                                                return DropdownMenuItem(
+                                                  value: e,
+                                                  onTap: (){
+                                                    setState(() {
+                                                      value=e;
+                                                      editCodeCountryController.text=e;
+                                                    });
+                                                  },
+                                                  child:   Text(e),
+                                                );
+                                              })],
                                             ),
-
                                             TheFormFiled(
                                               controller:editCountryArController,
                                               hintText: 'Country Ar',
@@ -484,19 +387,17 @@ class _CountryScreenState extends State<CountryScreen> {
   }
 }
 
-
-
 class MajorScreen extends StatefulWidget {
   const MajorScreen({Key? key}) : super(key: key);
 
   @override
   State<MajorScreen> createState() => _MajorScreenState();
 }
-
 class _MajorScreenState extends State<MajorScreen> {
   late final TextEditingController majorArController=TextEditingController(text: '');
   late final TextEditingController majorEnController=TextEditingController(text: '');
   late final TextEditingController countryController=TextEditingController(text: '');
+  late final TextEditingController filterCountryController=TextEditingController(text: '');
 
   late final TextEditingController editCountryController=TextEditingController(text: '');
   late final TextEditingController editMajorArController=TextEditingController(text: '');
@@ -504,18 +405,18 @@ class _MajorScreenState extends State<MajorScreen> {
   var formKey=GlobalKey<FormState>();
   var editFormKey=GlobalKey<FormState>();
   bool isAdd=false;
-  bool isEdit=true;
+  bool isShow=true;
   void changeAdd(){
     setState(() {
       isAdd=true;
-      isEdit=false;
+      isShow=false;
     });
 
   }
   void changeEdit(){
     setState(() {
       isAdd=false;
-      isEdit=true;
+      isShow=true;
     });
   }
 
@@ -547,7 +448,7 @@ class _MajorScreenState extends State<MajorScreen> {
               const SizedBox(width: 10,),
               ElevatedButton(
                 onPressed: changeEdit,
-                child:const  Text('Edit'),
+                child:const  Text('Show'),
               ),
             ],
           ),
@@ -561,71 +462,21 @@ class _MajorScreenState extends State<MajorScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        controller: countryController,
-                        maxLines: 1,
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 20
-                        ),
-                        validator: (value){
-                          if(value!.isEmpty){
-                            return 'Please Enter The date';
-                          }
-                          return null;
-                        },
-                        decoration:   InputDecoration(
-                            hintText: 'Country',
-                            hintStyle:   const TextStyle(
-                                color: Colors.black,
-                                fontSize: 20
-                            ),
-                            suffixIcon: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                    ),
-                                    onChanged: (value) {},
-                                    hint: const Text('Select '),
-                                    items: [
-                                      ...country.map((e){
-                                        return DropdownMenuItem(
-                                          value: e,
-                                          onTap: (){
-                                            setState(() {
-                                              value=e;
-                                              countryController.text=e;
-                                            });
-                                          },
-                                          child:   Text(e),
-                                        );
-
-                                      }),
-                                    ]
-                                ),
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                    color: Colors.grey,
-                                    width: 1
-                                )
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide:  BorderSide(
-                                    color: mainColor,
-                                    width: 1
-                                )
-                            )
-                        ),
-                      ),
+                    SelectedFormFiled(
+                      hintText:'Country' ,
+                      controller:countryController ,
+                      list: [ ...country.map((e){
+                        return DropdownMenuItem(
+                          value: e,
+                          onTap: (){
+                            setState(() {
+                              value=e;
+                              countryController.text=e;
+                            });
+                          },
+                          child:   Text(e),
+                        );
+                      })],
                     ),
                     Row(
                       children: [
@@ -653,243 +504,218 @@ class _MajorScreenState extends State<MajorScreen> {
                 ),
               ),
             ) :
-            ListView.builder(
-                shrinkWrap: true,
-                itemCount: 10,
-                itemBuilder:(context,index){
-                  return Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(20),
-                    margin: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: Colors.white38,
-                      border: Border.all(
-                          color: Colors.black,
-                          width: 2
-                      ),
-                    ),
-                    child:Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'Country Ar : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    const  TextSpan(text: 'القاهره',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
+            Column(
+              children: [
+                SelectedFormFiled(
+                  hintText:'Country' ,
+                  controller:filterCountryController ,
+                  list: [ ...country.map((e){
+                    return DropdownMenuItem(
+                      value: e,
+                      onTap: (){
+                        setState(() {
+                          value=e;
+                          filterCountryController.text=e;
+                        });
+                      },
+                      child:   Text(e),
+                    );
+                  })],
+                ),
+                Expanded(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 10,
+                      itemBuilder:(context,index){
+                        return Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(20),
+                          margin: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.white38,
+                            border: Border.all(
+                                color: Colors.black,
+                                width: 2
                             ),
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'Country En : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    TextSpan(text: 'Egypt',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
-                            ),
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'Code Country : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    const TextSpan(text: '+20',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'Major Ar : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    const  TextSpan(text: 'major ar',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
-                            ),
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'Major En : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    TextSpan(text: 'major en',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10,),
-                        Row(
-                          children: [
-                            Expanded(child:  Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                              child: ElevatedButton(
-                                onPressed: (){
-                                  dialogEdit(context:context ,fct: (){},
-                                      widget:SizedBox(
-                                        width: 500,
-                                        child: Form(
-                                          key: editFormKey,
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: [
-                                              TextFormField(
-                                                controller: editCountryController,
-                                                maxLines: 1,
-                                                style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20
-                                                ),
-                                                validator: (value){
-                                                  if(value!.isEmpty){
-                                                    return 'Please Enter The date';
-                                                  }
-                                                  return null;
-                                                },
-                                                decoration:   InputDecoration(
-                                                    hintText: 'Country',
-                                                    hintStyle:   const TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 20
-                                                    ),
-                                                    suffixIcon: Padding(
-                                                      padding: const EdgeInsets.all(8.0),
-                                                      child: DropdownButtonHideUnderline(
-                                                        child: DropdownButton<String>(
-                                                            style: const TextStyle(
-                                                              color: Colors.black,
-                                                              fontSize: 18,
-                                                            ),
-                                                            onChanged: (value) {},
-                                                            hint: const Text('Select '),
-                                                            items: [
-                                                              ...country.map((e){
-                                                                return DropdownMenuItem(
-                                                                  value: e,
-                                                                  onTap: (){
-                                                                    setState(() {
-                                                                      value=e;
-                                                                      editCountryController.text=e;
-                                                                    });
-                                                                  },
-                                                                  child:   Text(e),
-                                                                );
-
-                                                              }),
-                                                            ]
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    enabledBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(12),
-                                                        borderSide: const BorderSide(
-                                                            color: Colors.grey,
-                                                            width: 1
-                                                        )
-                                                    ),
-                                                    focusedBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(12),
-                                                        borderSide:  BorderSide(
-                                                            color: mainColor,
-                                                            width: 1
-                                                        )
-                                                    )
-                                                ),
-                                              ),
-
-                                              TheFormFiled(
-                                                controller:editMajorArController,
-                                                hintText: 'Major Ar',
-                                                mixLine: 1,
-                                              ),
-                                              TheFormFiled(
-                                                controller:editMajorEnController,
-                                                hintText: 'Major En',
-                                                mixLine: 1,
-                                              ),
-                                            ],
+                          ),
+                          child:Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  RichText(
+                                    text:  TextSpan(
+                                        children: [
+                                          TextSpan(text: 'Country Ar : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
                                           ),
-                                        ),
-                                      ) );
+                                          ),
+                                          const  TextSpan(text: 'القاهره',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          ),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                  RichText(
+                                    text:  TextSpan(
+                                        children: [
+                                          TextSpan(text: 'Country En : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                          ),
+                                          TextSpan(text: 'Egypt',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          ),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                  RichText(
+                                    text:  TextSpan(
+                                        children: [
+                                          TextSpan(text: 'Code Country : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                          ),
+                                          const TextSpan(text: '+20',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          ),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  RichText(
+                                    text:  TextSpan(
+                                        children: [
+                                          TextSpan(text: 'Major Ar : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                          ),
+                                          const  TextSpan(text: 'major ar',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          ),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                  RichText(
+                                    text:  TextSpan(
+                                        children: [
+                                          TextSpan(text: 'Major En : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                          ),
+                                          TextSpan(text: 'major en',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          ),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 10,),
+                              Row(
+                                children: [
+                                  Expanded(child:  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                    child: ElevatedButton(
+                                      onPressed: (){
+                                        dialogEdit(context:context ,fct: (){},
+                                            widget:SizedBox(
+                                              width: 500,
+                                              child: Form(
+                                                key: editFormKey,
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    SelectedFormFiled(
+                                                      hintText:'Country' ,
+                                                      controller:editCountryController ,
+                                                      list: [ ...country.map((e){
+                                                        return DropdownMenuItem(
+                                                          value: e,
+                                                          onTap: (){
+                                                            setState(() {
+                                                              value=e;
+                                                              editCountryController.text=e;
+                                                            });
+                                                          },
+                                                          child:   Text(e),
+                                                        );
+                                                      })],
+                                                    ),
+
+                                                    TheFormFiled(
+                                                      controller:editMajorArController,
+                                                      hintText: 'Major Ar',
+                                                      mixLine: 1,
+                                                    ),
+                                                    TheFormFiled(
+                                                      controller:editMajorEnController,
+                                                      hintText: 'Major En',
+                                                      mixLine: 1,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ) );
 
 
-                                },
-                                child:const  Text('Edit'),
+                                      },
+                                      child:const  Text('Edit'),
+                                    ),
+                                  ),),
+                                  Expanded(child:  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                    child: ElevatedButton(
+                                      onPressed: (){
+                                        dialogDelete(context: context,fct: (){});
+                                      },
+                                      style: ButtonStyle(
+                                        backgroundColor: MaterialStateProperty.all(Colors.red),
+                                      ),
+                                      child:const  Text('Delete'),
+                                    ),
+                                  ),),
+                                ],
                               ),
-                            ),),
-                            Expanded(child:  Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                              child: ElevatedButton(
-                                onPressed: (){
-                                  dialogDelete(context: context,fct: (){});
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(Colors.red),
-                                ),
-                                child:const  Text('Delete'),
-                              ),
-                            ),),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                } )
+                            ],
+                          ),
+                        );
+                      } ),
+                ),
+              ],
+            )
         ),)
       ],
     );
@@ -907,7 +733,9 @@ class _GradeScreenState extends State<GradeScreen> {
   late final TextEditingController gradeArController=TextEditingController(text: '');
   late final TextEditingController gradeEnController=TextEditingController(text: '');
   late final TextEditingController countryController=TextEditingController(text: '');
+  late final TextEditingController filterCountryController=TextEditingController(text: '');
   late final TextEditingController majorController=TextEditingController(text: '');
+  late final TextEditingController filterMajorController=TextEditingController(text: '');
 
   late final TextEditingController editGradeArController=TextEditingController(text: '');
   late final TextEditingController editGradeEnController=TextEditingController(text: '');
@@ -916,12 +744,12 @@ class _GradeScreenState extends State<GradeScreen> {
   var formKey=GlobalKey<FormState>();
   var editFormKey=GlobalKey<FormState>();
   bool isAdd=false;
-  bool isEdit=true;
+  bool isShow=true;
 
   void changeAdd(){
     setState(() {
       isAdd=true;
-      isEdit=false;
+      isShow=false;
     });
 
   }
@@ -929,7 +757,7 @@ class _GradeScreenState extends State<GradeScreen> {
   void changeEdit(){
     setState(() {
       isAdd=false;
-      isEdit=true;
+      isShow=true;
     });
   }
 
@@ -966,7 +794,7 @@ class _GradeScreenState extends State<GradeScreen> {
               const SizedBox(width: 10,),
               ElevatedButton(
                 onPressed: changeEdit,
-                child:const  Text('Edit'),
+                child:const  Text('Show'),
               ),
             ],
           ),
@@ -980,137 +808,37 @@ class _GradeScreenState extends State<GradeScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        controller: countryController,
-                        maxLines: 1,
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 20
-                        ),
-                        validator: (value){
-                          if(value!.isEmpty){
-                            return 'Please Enter The date';
-                          }
-                          return null;
-                        },
-                        decoration:   InputDecoration(
-                            hintText: 'Country',
-                            hintStyle:   const TextStyle(
-                                color: Colors.black,
-                                fontSize: 20
-                            ),
-                            suffixIcon: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                    ),
-                                    onChanged: (value) {},
-                                    hint: const Text('Select '),
-                                    items: [
-                                      ...country.map((e){
-                                        return DropdownMenuItem(
-                                          value: e,
-                                          onTap: (){
-                                            setState(() {
-                                              value=e;
-                                              countryController.text=e;
-                                            });
-                                          },
-                                          child:   Text(e),
-                                        );
-
-                                      }),
-                                    ]
-                                ),
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                    color: Colors.grey,
-                                    width: 1
-                                )
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide:  BorderSide(
-                                    color: mainColor,
-                                    width: 1
-                                )
-                            )
-                        ),
-                      ),
+                    SelectedFormFiled(
+                      hintText:'Country' ,
+                      controller:countryController ,
+                      list: [ ...country.map((e){
+                        return DropdownMenuItem(
+                          value: e,
+                          onTap: (){
+                            setState(() {
+                              value=e;
+                              countryController.text=e;
+                            });
+                          },
+                          child:   Text(e),
+                        );
+                      })],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        controller: majorController,
-                        maxLines: 1,
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 20
-                        ),
-                        validator: (value){
-                          if(value!.isEmpty){
-                            return 'Please Enter The date';
-                          }
-                          return null;
-                        },
-                        decoration:   InputDecoration(
-                            hintText: 'Major',
-                            hintStyle:   const TextStyle(
-                                color: Colors.black,
-                                fontSize: 20
-                            ),
-                            suffixIcon: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                    ),
-                                    onChanged: (value) {},
-                                    hint: const Text('Select '),
-                                    items: [
-                                      ...major.map((e){
-                                        return DropdownMenuItem(
-                                          value: e,
-                                          onTap: (){
-                                            setState(() {
-                                              value=e;
-                                              countryController.text=e;
-                                            });
-                                          },
-                                          child:   Text(e),
-                                        );
-
-                                      }),
-                                    ]
-                                ),
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                    color: Colors.grey,
-                                    width: 1
-                                )
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide:  BorderSide(
-                                    color: mainColor,
-                                    width: 1
-                                )
-                            )
-                        ),
-                      ),
+                    SelectedFormFiled(
+                      hintText:'Major' ,
+                      controller:majorController ,
+                      list: [ ...major.map((e){
+                        return DropdownMenuItem(
+                          value: e,
+                          onTap: (){
+                            setState(() {
+                              value=e;
+                              majorController.text=e;
+                            });
+                          },
+                          child:   Text(e),
+                        );
+                      })],
                     ),
                     Row(
                       children: [
@@ -1138,347 +866,296 @@ class _GradeScreenState extends State<GradeScreen> {
                 ),
               ),
             ) :
-            ListView.builder(
-                shrinkWrap: true,
-                itemCount: 10,
-                itemBuilder:(context,index){
-                  return Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(20),
-                    margin: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: Colors.white38,
-                      border: Border.all(
-                          color: Colors.black,
-                          width: 2
-                      ),
-                    ),
-                    child:Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'Country Ar : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    const  TextSpan(text: 'القاهره',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
+            Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: SelectedFormFiled(
+                      hintText:'Country' ,
+                      controller:filterCountryController ,
+                      list: [ ...country.map((e){
+                        return DropdownMenuItem(
+                          value: e,
+                          onTap: (){
+                            setState(() {
+                              value=e;
+                              filterCountryController.text=e;
+                            });
+                          },
+                          child:   Text(e),
+                        );
+                      })],
+                    ),),
+                    Expanded(child: SelectedFormFiled(
+                      hintText:'Major' ,
+                      controller:filterMajorController ,
+                      list: [ ...major.map((e){
+                        return DropdownMenuItem(
+                          value: e,
+                          onTap: (){
+                            setState(() {
+                              value=e;
+                              filterMajorController.text=e;
+                            });
+                          },
+                          child:   Text(e),
+                        );
+                      })],
+                    ),),
+                  ],
+                ),
+                Expanded(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 10,
+                      itemBuilder:(context,index){
+                        return Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(20),
+                          margin: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.white38,
+                            border: Border.all(
+                                color: Colors.black,
+                                width: 2
                             ),
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'Country En : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    TextSpan(text: 'Egypt',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
-                            ),
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'Code Country : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    const TextSpan(text: '+20',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'Major Ar : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    const  TextSpan(text: 'major ar',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
-                            ),
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'Major En : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    TextSpan(text: 'major en',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'Grade Ar : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    const  TextSpan(text: 'grade ar',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
-                            ),
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'Grade En : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    TextSpan(text: 'grade en',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10,),
-                        Row(
-                          children: [
-                            Expanded(child:  Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                              child: ElevatedButton(
-                                onPressed: (){
-                                  dialogEdit(context:context ,fct: (){},
-                                  widget:SizedBox(
-                                    width: 500,
-                                    child: Form(
-                                      key: editFormKey,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                          ),
+                          child:Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  RichText(
+                                    text:  TextSpan(
                                         children: [
-                                          TextFormField(
-                                            controller: editCountryController,
-                                            maxLines: 1,
-                                            style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 20
-                                            ),
-                                            validator: (value){
-                                              if(value!.isEmpty){
-                                                return 'Please Enter The date';
-                                              }
-                                              return null;
-                                            },
-                                            decoration:   InputDecoration(
-                                                hintText: 'Country',
-                                                hintStyle:   const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20
-                                                ),
-                                                suffixIcon: Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: DropdownButtonHideUnderline(
-                                                    child: DropdownButton<String>(
-                                                        style: const TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 18,
-                                                        ),
-                                                        onChanged: (value) {},
-                                                        hint: const Text('Select '),
-                                                        items: [
-                                                          ...country.map((e){
-                                                            return DropdownMenuItem(
-                                                              value: e,
-                                                              onTap: (){
-                                                                setState(() {
-                                                                  value=e;
-                                                                  editCountryController.text=e;
-                                                                });
-                                                              },
-                                                              child:   Text(e),
-                                                            );
-
-                                                          }),
-                                                        ]
-                                                    ),
-                                                  ),
-                                                ),
-                                                enabledBorder: OutlineInputBorder(
-                                                    borderRadius: BorderRadius.circular(12),
-                                                    borderSide: const BorderSide(
-                                                        color: Colors.grey,
-                                                        width: 1
-                                                    )
-                                                ),
-                                                focusedBorder: OutlineInputBorder(
-                                                    borderRadius: BorderRadius.circular(12),
-                                                    borderSide:  BorderSide(
-                                                        color: mainColor,
-                                                        width: 1
-                                                    )
-                                                )
-                                            ),
+                                          TextSpan(text: 'Country Ar : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
                                           ),
-                                          const SizedBox(height: 10,),
-                                          TextFormField(
-                                            controller: editMajorController,
-                                            maxLines: 1,
-                                            style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 20
-                                            ),
-                                            validator: (value){
-                                              if(value!.isEmpty){
-                                                return 'Please Enter The date';
-                                              }
-                                              return null;
-                                            },
-                                            decoration:   InputDecoration(
-                                                hintText: 'Major',
-                                                hintStyle:   const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20
-                                                ),
-                                                suffixIcon: Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: DropdownButtonHideUnderline(
-                                                    child: DropdownButton<String>(
-                                                        style: const TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 18,
-                                                        ),
-                                                        onChanged: (value) {},
-                                                        hint: const Text('Select '),
-                                                        items: [
-                                                          ...major.map((e){
-                                                            return DropdownMenuItem(
-                                                              value: e,
-                                                              onTap: (){
-                                                                setState(() {
-                                                                  value=e;
-                                                                  editMajorController.text=e;
-                                                                });
-                                                              },
-                                                              child:   Text(e),
-                                                            );
-
-                                                          }),
-                                                        ]
-                                                    ),
-                                                  ),
-                                                ),
-                                                enabledBorder: OutlineInputBorder(
-                                                    borderRadius: BorderRadius.circular(12),
-                                                    borderSide: const BorderSide(
-                                                        color: Colors.grey,
-                                                        width: 1
-                                                    )
-                                                ),
-                                                focusedBorder: OutlineInputBorder(
-                                                    borderRadius: BorderRadius.circular(12),
-                                                    borderSide:  BorderSide(
-                                                        color: mainColor,
-                                                        width: 1
-                                                    )
-                                                )
-                                            ),
                                           ),
-                                          TheFormFiled(
-                                            controller:editGradeArController,
-                                            hintText: 'Grade Ar',
-                                            mixLine: 1,
+                                          const  TextSpan(text: 'القاهره',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
                                           ),
-                                          TheFormFiled(
-                                            controller:editGradeEnController,
-                                            hintText: 'Grade En',
-                                            mixLine: 1,
                                           ),
-                                        ],
-                                      ),
+                                        ]
                                     ),
-                                  ) );
+                                  ),
+                                  RichText(
+                                    text:  TextSpan(
+                                        children: [
+                                          TextSpan(text: 'Country En : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                          ),
+                                          TextSpan(text: 'Egypt',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          ),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                  RichText(
+                                    text:  TextSpan(
+                                        children: [
+                                          TextSpan(text: 'Code Country : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                          ),
+                                          const TextSpan(text: '+20',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          ),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  RichText(
+                                    text:  TextSpan(
+                                        children: [
+                                          TextSpan(text: 'Major Ar : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                          ),
+                                          const  TextSpan(text: 'major ar',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          ),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                  RichText(
+                                    text:  TextSpan(
+                                        children: [
+                                          TextSpan(text: 'Major En : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                          ),
+                                          TextSpan(text: 'major en',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          ),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  RichText(
+                                    text:  TextSpan(
+                                        children: [
+                                          TextSpan(text: 'Grade Ar : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                          ),
+                                          const  TextSpan(text: 'grade ar',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          ),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                  RichText(
+                                    text:  TextSpan(
+                                        children: [
+                                          TextSpan(text: 'Grade En : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                          ),
+                                          TextSpan(text: 'grade en',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          ),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 10,),
+                              Row(
+                                children: [
+                                  Expanded(child:  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                    child: ElevatedButton(
+                                      onPressed: (){
+                                        dialogEdit(context:context ,fct: (){},
+                                        widget:SizedBox(
+                                          width: 500,
+                                          child: Form(
+                                            key: editFormKey,
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                SelectedFormFiled(
+                                                  hintText:'Country' ,
+                                                  controller:editCountryController ,
+                                                  list: [ ...country.map((e){
+                                                    return DropdownMenuItem(
+                                                      value: e,
+                                                      onTap: (){
+                                                        setState(() {
+                                                          value=e;
+                                                          editCountryController.text=e;
+                                                        });
+                                                      },
+                                                      child:   Text(e),
+                                                    );
+                                                  })],
+                                                ),
+
+                                                const SizedBox(height: 10,),
+                                                SelectedFormFiled(
+                                                  hintText:'Major' ,
+                                                  controller:editMajorController ,
+                                                  list: [ ...major.map((e){
+                                                    return DropdownMenuItem(
+                                                      value: e,
+                                                      onTap: (){
+                                                        setState(() {
+                                                          value=e;
+                                                          editMajorController.text=e;
+                                                        });
+                                                      },
+                                                      child:   Text(e),
+                                                    );
+                                                  })],
+                                                ),
+                                                TheFormFiled(
+                                                  controller:editGradeArController,
+                                                  hintText: 'Grade Ar',
+                                                  mixLine: 1,
+                                                ),
+                                                TheFormFiled(
+                                                  controller:editGradeEnController,
+                                                  hintText: 'Grade En',
+                                                  mixLine: 1,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ) );
 
 
-                                },
-                                child:const  Text('Edit'),
+                                      },
+                                      child:const  Text('Edit'),
+                                    ),
+                                  ),),
+                                  Expanded(child:  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                    child: ElevatedButton(
+                                      onPressed: (){
+                                        dialogDelete(context: context,fct: (){});
+                                      },
+                                      style: ButtonStyle(
+                                        backgroundColor: MaterialStateProperty.all(Colors.red),
+                                      ),
+                                      child:const  Text('Delete'),
+                                    ),
+                                  ),),
+                                ],
                               ),
-                            ),),
-                            Expanded(child:  Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                              child: ElevatedButton(
-                                onPressed: (){
-                                  dialogDelete(context: context,fct: (){});
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(Colors.red),
-                                ),
-                                child:const  Text('Delete'),
-                              ),
-                            ),),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                } )
+                            ],
+                          ),
+                        );
+                      } ),
+                ),
+              ],
+            )
         ),)
       ],
     );
@@ -1499,6 +1176,10 @@ class _TypeOfSchoolState extends State<TypeOfSchool> {
   late final TextEditingController majorController=TextEditingController(text: '');
   late final TextEditingController gradeController=TextEditingController(text: '');
 
+  late final TextEditingController filterCountryController=TextEditingController(text: '');
+  late final TextEditingController filterMajorController=TextEditingController(text: '');
+  late final TextEditingController filterGradeController=TextEditingController(text: '');
+
 
   late final TextEditingController editTypeSchoolArController=TextEditingController(text: '');
   late final TextEditingController editTypeSchoolEnController=TextEditingController(text: '');
@@ -1508,12 +1189,12 @@ class _TypeOfSchoolState extends State<TypeOfSchool> {
   var editFormKey=GlobalKey<FormState>();
 
   bool isAdd=false;
-  bool isEdit=true;
+  bool isShow=true;
 
   void changeAdd(){
     setState(() {
       isAdd=true;
-      isEdit=false;
+      isShow=false;
     });
 
   }
@@ -1521,7 +1202,7 @@ class _TypeOfSchoolState extends State<TypeOfSchool> {
   void changeEdit(){
     setState(() {
       isAdd=false;
-      isEdit=true;
+      isShow=true;
     });
   }
 
@@ -1559,7 +1240,7 @@ class _TypeOfSchoolState extends State<TypeOfSchool> {
               const SizedBox(width: 10,),
               ElevatedButton(
                 onPressed: changeEdit,
-                child:const  Text('Edit'),
+                child:const  Text('Show'),
               ),
             ],
           ),
@@ -1573,204 +1254,56 @@ class _TypeOfSchoolState extends State<TypeOfSchool> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        controller: countryController,
-                        maxLines: 1,
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 20
-                        ),
-                        validator: (value){
-                          if(value!.isEmpty){
-                            return 'Please Enter The date';
-                          }
-                          return null;
-                        },
-                        decoration:   InputDecoration(
-                            hintText: 'Country',
-                            hintStyle:   const TextStyle(
-                                color: Colors.black,
-                                fontSize: 20
-                            ),
-                            suffixIcon: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                    ),
-                                    onChanged: (value) {},
-                                    hint: const Text('Select '),
-                                    items: [
-                                      ...country.map((e){
-                                        return DropdownMenuItem(
-                                          value: e,
-                                          onTap: (){
-                                            setState(() {
-                                              value=e;
-                                              countryController.text=e;
-                                            });
-                                          },
-                                          child:   Text(e),
-                                        );
-
-                                      }),
-                                    ]
-                                ),
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                    color: Colors.grey,
-                                    width: 1
-                                )
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide:  BorderSide(
-                                    color: mainColor,
-                                    width: 1
-                                )
-                            )
-                        ),
-                      ),
+                    SelectedFormFiled(
+                      hintText:'Country' ,
+                      controller:countryController ,
+                      list: [ ...country.map((e){
+                        return DropdownMenuItem(
+                          value: e,
+                          onTap: (){
+                            setState(() {
+                              value=e;
+                              countryController.text=e;
+                            });
+                          },
+                          child:   Text(e),
+                        );
+                      })],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        controller: majorController,
-                        maxLines: 1,
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 20
-                        ),
-                        validator: (value){
-                          if(value!.isEmpty){
-                            return 'Please Enter The date';
-                          }
-                          return null;
-                        },
-                        decoration:   InputDecoration(
-                            hintText: 'Major',
-                            hintStyle:   const TextStyle(
-                                color: Colors.black,
-                                fontSize: 20
-                            ),
-                            suffixIcon: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                    ),
-                                    onChanged: (value) {},
-                                    hint: const Text('Select '),
-                                    items: [
-                                      ...major.map((e){
-                                        return DropdownMenuItem(
-                                          value: e,
-                                          onTap: (){
-                                            setState(() {
-                                              value=e;
-                                              countryController.text=e;
-                                            });
-                                          },
-                                          child:   Text(e),
-                                        );
-
-                                      }),
-                                    ]
-                                ),
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                    color: Colors.grey,
-                                    width: 1
-                                )
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide:  BorderSide(
-                                    color: mainColor,
-                                    width: 1
-                                )
-                            )
-                        ),
-                      ),
+                    SelectedFormFiled(
+                      hintText:'Major' ,
+                      controller:majorController ,
+                      list: [ ...major.map((e){
+                        return DropdownMenuItem(
+                          value: e,
+                          onTap: (){
+                            setState(() {
+                              value=e;
+                              majorController.text=e;
+                            });
+                          },
+                          child:   Text(e),
+                        );
+                      })],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        controller: majorController,
-                        maxLines: 1,
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 20
-                        ),
-                        validator: (value){
-                          if(value!.isEmpty){
-                            return 'Please Enter The date';
-                          }
-                          return null;
-                        },
-                        decoration:   InputDecoration(
-                            hintText: 'Grade',
-                            hintStyle:   const TextStyle(
-                                color: Colors.black,
-                                fontSize: 20
-                            ),
-                            suffixIcon: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                    ),
-                                    onChanged: (value) {},
-                                    hint: const Text('Select '),
-                                    items: [
-                                      ...grade.map((e){
-                                        return DropdownMenuItem(
-                                          value: e,
-                                          onTap: (){
-                                            setState(() {
-                                              value=e;
-                                              countryController.text=e;
-                                            });
-                                          },
-                                          child:   Text(e),
-                                        );
-
-                                      }),
-                                    ]
-                                ),
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                    color: Colors.grey,
-                                    width: 1
-                                )
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide:  BorderSide(
-                                    color: mainColor,
-                                    width: 1
-                                )
-                            )
-                        ),
-                      ),
+                    SelectedFormFiled(
+                      hintText:'Grade' ,
+                      controller:gradeController ,
+                      list: [ ...grade.map((e){
+                        return DropdownMenuItem(
+                          value: e,
+                          onTap: (){
+                            setState(() {
+                              value=e;
+                              gradeController.text=e;
+                            });
+                          },
+                          child:   Text(e),
+                        );
+                      })],
                     ),
+
+
                     Row(
                       children: [
                         Expanded(
@@ -1797,451 +1330,368 @@ class _TypeOfSchoolState extends State<TypeOfSchool> {
                 ),
               ),
             ) :
-            ListView.builder(
-                shrinkWrap: true,
-                itemCount: 10,
-                itemBuilder:(context,index){
-                  return Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(20),
-                    margin: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: Colors.white38,
-                      border: Border.all(
-                          color: Colors.black,
-                          width: 2
-                      ),
-                    ),
-                    child:Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'Country Ar : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    const  TextSpan(text: 'القاهره',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
+            Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: SelectedFormFiled(
+                      hintText:'Country' ,
+                      controller:filterCountryController ,
+                      list: [ ...country.map((e){
+                        return DropdownMenuItem(
+                          value: e,
+                          onTap: (){
+                            setState(() {
+                              value=e;
+                              filterCountryController.text=e;
+                            });
+                          },
+                          child:   Text(e),
+                        );
+                      })],
+                    ),),
+                    Expanded(child: SelectedFormFiled(
+                      hintText:'Major' ,
+                      controller:filterMajorController ,
+                      list: [ ...major.map((e){
+                        return DropdownMenuItem(
+                          value: e,
+                          onTap: (){
+                            setState(() {
+                              value=e;
+                              filterMajorController.text=e;
+                            });
+                          },
+                          child:   Text(e),
+                        );
+                      })],
+                    ),),
+                    Expanded(child: SelectedFormFiled(
+                      hintText:'Grade' ,
+                      controller:filterGradeController ,
+                      list: [ ...grade.map((e){
+                        return DropdownMenuItem(
+                          value: e,
+                          onTap: (){
+                            setState(() {
+                              value=e;
+                              filterGradeController.text=e;
+                            });
+                          },
+                          child:   Text(e),
+                        );
+                      })],
+                    ),),
+                  ],
+                ),
+                Expanded(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 10,
+                      itemBuilder:(context,index){
+                        return Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(20),
+                          margin: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.white38,
+                            border: Border.all(
+                                color: Colors.black,
+                                width: 2
                             ),
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'Country En : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    TextSpan(text: 'Egypt',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
-                            ),
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'Code Country : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    const TextSpan(text: '+20',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'Major Ar : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    const  TextSpan(text: 'major ar',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
-                            ),
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'Major En : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    TextSpan(text: 'major en',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'Grade Ar : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    const  TextSpan(text: 'grade ar',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
-                            ),
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'Grade En : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    TextSpan(text: 'grade en',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'TypeSchool Ar : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    const  TextSpan(text: 'TypeSchool ar',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
-                            ),
-                            RichText(
-                              text:  TextSpan(
-                                  children: [
-                                    TextSpan(text: 'Type School En : ',style: TextStyle(
-                                      color: mainColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                    ),
-                                    TextSpan(text: 'TypeSchool en',style:  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15,
-                                    ),
-                                    ),
-                                  ]
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10,),
-                        Row(
-                          children: [
-                            Expanded(child:  Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                              child: ElevatedButton(
-                                onPressed: (){
-                                  dialogEdit(context:context ,fct: (){},
-                                      widget:SizedBox(
-                                        width: 500,
-                                        child: Form(
-                                          key: editFormKey,
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: [
-                                              TextFormField(
-                                                controller: editCountryController,
-                                                maxLines: 1,
-                                                style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20
-                                                ),
-                                                validator: (value){
-                                                  if(value!.isEmpty){
-                                                    return 'Please Enter The date';
-                                                  }
-                                                  return null;
-                                                },
-                                                decoration:   InputDecoration(
-                                                    hintText: 'Country',
-                                                    hintStyle:   const TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 20
-                                                    ),
-                                                    suffixIcon: Padding(
-                                                      padding: const EdgeInsets.all(8.0),
-                                                      child: DropdownButtonHideUnderline(
-                                                        child: DropdownButton<String>(
-                                                            style: const TextStyle(
-                                                              color: Colors.black,
-                                                              fontSize: 18,
-                                                            ),
-                                                            onChanged: (value) {},
-                                                            hint: const Text('Select '),
-                                                            items: [
-                                                              ...country.map((e){
-                                                                return DropdownMenuItem(
-                                                                  value: e,
-                                                                  onTap: (){
-                                                                    setState(() {
-                                                                      value=e;
-                                                                      editCountryController.text=e;
-                                                                    });
-                                                                  },
-                                                                  child:   Text(e),
-                                                                );
-
-                                                              }),
-                                                            ]
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    enabledBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(12),
-                                                        borderSide: const BorderSide(
-                                                            color: Colors.grey,
-                                                            width: 1
-                                                        )
-                                                    ),
-                                                    focusedBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(12),
-                                                        borderSide:  BorderSide(
-                                                            color: mainColor,
-                                                            width: 1
-                                                        )
-                                                    )
-                                                ),
-                                              ),
-                                              const SizedBox(height: 10,),
-                                              TextFormField(
-                                                controller: editMajorController,
-                                                maxLines: 1,
-                                                style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20
-                                                ),
-                                                validator: (value){
-                                                  if(value!.isEmpty){
-                                                    return 'Please Enter The date';
-                                                  }
-                                                  return null;
-                                                },
-                                                decoration:   InputDecoration(
-                                                    hintText: 'Major',
-                                                    hintStyle:   const TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 20
-                                                    ),
-                                                    suffixIcon: Padding(
-                                                      padding: const EdgeInsets.all(8.0),
-                                                      child: DropdownButtonHideUnderline(
-                                                        child: DropdownButton<String>(
-                                                            style: const TextStyle(
-                                                              color: Colors.black,
-                                                              fontSize: 18,
-                                                            ),
-                                                            onChanged: (value) {},
-                                                            hint: const Text('Select '),
-                                                            items: [
-                                                              ...major.map((e){
-                                                                return DropdownMenuItem(
-                                                                  value: e,
-                                                                  onTap: (){
-                                                                    setState(() {
-                                                                      value=e;
-                                                                      editMajorController.text=e;
-                                                                    });
-                                                                  },
-                                                                  child:   Text(e),
-                                                                );
-
-                                                              }),
-                                                            ]
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    enabledBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(12),
-                                                        borderSide: const BorderSide(
-                                                            color: Colors.grey,
-                                                            width: 1
-                                                        )
-                                                    ),
-                                                    focusedBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(12),
-                                                        borderSide:  BorderSide(
-                                                            color: mainColor,
-                                                            width: 1
-                                                        )
-                                                    )
-                                                ),
-                                              ),
-                                              const SizedBox(height: 10,),
-                                              TextFormField(
-                                                controller: editGradeController,
-                                                maxLines: 1,
-                                                style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20
-                                                ),
-                                                validator: (value){
-                                                  if(value!.isEmpty){
-                                                    return 'Please Enter The date';
-                                                  }
-                                                  return null;
-                                                },
-                                                decoration:   InputDecoration(
-                                                    hintText: 'Grade',
-                                                    hintStyle:   const TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 20
-                                                    ),
-                                                    suffixIcon: Padding(
-                                                      padding: const EdgeInsets.all(8.0),
-                                                      child: DropdownButtonHideUnderline(
-                                                        child: DropdownButton<String>(
-                                                            style: const TextStyle(
-                                                              color: Colors.black,
-                                                              fontSize: 18,
-                                                            ),
-                                                            onChanged: (value) {},
-                                                            hint: const Text('Select '),
-                                                            items: [
-                                                              ...grade.map((e){
-                                                                return DropdownMenuItem(
-                                                                  value: e,
-                                                                  onTap: (){
-                                                                    setState(() {
-                                                                      value=e;
-                                                                      editGradeController.text=e;
-                                                                    });
-                                                                  },
-                                                                  child:   Text(e),
-                                                                );
-
-                                                              }),
-                                                            ]
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    enabledBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(12),
-                                                        borderSide: const BorderSide(
-                                                            color: Colors.grey,
-                                                            width: 1
-                                                        )
-                                                    ),
-                                                    focusedBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(12),
-                                                        borderSide:  BorderSide(
-                                                            color: mainColor,
-                                                            width: 1
-                                                        )
-                                                    )
-                                                ),
-                                              ),
-                                              TheFormFiled(
-                                                controller:editTypeSchoolArController,
-                                                hintText: 'TypeSchool Ar',
-                                                mixLine: 1,
-                                              ),
-                                              TheFormFiled(
-                                                controller:editTypeSchoolEnController,
-                                                hintText: 'TypeSchool En',
-                                                mixLine: 1,
-                                              ),
-                                            ],
+                          ),
+                          child:Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  RichText(
+                                    text:  TextSpan(
+                                        children: [
+                                          TextSpan(text: 'Country Ar : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
                                           ),
-                                        ),
-                                      ) );
+                                          ),
+                                          const  TextSpan(text: 'القاهره',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          ),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                  RichText(
+                                    text:  TextSpan(
+                                        children: [
+                                          TextSpan(text: 'Country En : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                          ),
+                                          TextSpan(text: 'Egypt',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          ),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                  RichText(
+                                    text:  TextSpan(
+                                        children: [
+                                          TextSpan(text: 'Code Country : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                          ),
+                                          const TextSpan(text: '+20',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          ),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  RichText(
+                                    text:  TextSpan(
+                                        children: [
+                                          TextSpan(text: 'Major Ar : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                          ),
+                                          const  TextSpan(text: 'major ar',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          ),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                  RichText(
+                                    text:  TextSpan(
+                                        children: [
+                                          TextSpan(text: 'Major En : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                          ),
+                                          TextSpan(text: 'major en',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          ),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  RichText(
+                                    text:  TextSpan(
+                                        children: [
+                                          TextSpan(text: 'Grade Ar : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                          ),
+                                          const  TextSpan(text: 'grade ar',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          ),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                  RichText(
+                                    text:  TextSpan(
+                                        children: [
+                                          TextSpan(text: 'Grade En : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                          ),
+                                          TextSpan(text: 'grade en',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          ),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  RichText(
+                                    text:  TextSpan(
+                                        children: [
+                                          TextSpan(text: 'TypeSchool Ar : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                          ),
+                                          const  TextSpan(text: 'TypeSchool ar',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          ),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                  RichText(
+                                    text:  TextSpan(
+                                        children: [
+                                          TextSpan(text: 'Type School En : ',style: TextStyle(
+                                            color: mainColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                          ),
+                                          TextSpan(text: 'TypeSchool en',style:  TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 15,
+                                          ),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 10,),
+                              Row(
+                                children: [
+                                  Expanded(child:  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                    child: ElevatedButton(
+                                      onPressed: (){
+                                        dialogEdit(context:context ,fct: (){},
+                                            widget:SizedBox(
+                                              width: 500,
+                                              child: Form(
+                                                key: editFormKey,
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    SelectedFormFiled(
+                                                      hintText:'Country' ,
+                                                      controller:editCountryController ,
+                                                      list: [ ...country.map((e){
+                                                        return DropdownMenuItem(
+                                                          value: e,
+                                                          onTap: (){
+                                                            setState(() {
+                                                              value=e;
+                                                              editCountryController.text=e;
+                                                            });
+                                                          },
+                                                          child:   Text(e),
+                                                        );
+                                                      })],
+                                                    ),
+                                                    const SizedBox(height: 10,),
+                                                    SelectedFormFiled(
+                                                      hintText:'Major' ,
+                                                      controller:editMajorController ,
+                                                      list: [ ...major.map((e){
+                                                        return DropdownMenuItem(
+                                                          value: e,
+                                                          onTap: (){
+                                                            setState(() {
+                                                              value=e;
+                                                              editMajorController.text=e;
+                                                            });
+                                                          },
+                                                          child:   Text(e),
+                                                        );
+                                                      })],
+                                                    ),
+                                                    const SizedBox(height: 10,),
+                                                    SelectedFormFiled(
+                                                      hintText:'Grade' ,
+                                                      controller:editGradeController ,
+                                                      list: [ ...major.map((e){
+                                                        return DropdownMenuItem(
+                                                          value: e,
+                                                          onTap: (){
+                                                            setState(() {
+                                                              value=e;
+                                                              editGradeController.text=e;
+                                                            });
+                                                          },
+                                                          child:   Text(e),
+                                                        );
+                                                      })],
+                                                    ),
+                                                    TheFormFiled(
+                                                      controller:editTypeSchoolArController,
+                                                      hintText: 'TypeSchool Ar',
+                                                      mixLine: 1,
+                                                    ),
+                                                    TheFormFiled(
+                                                      controller:editTypeSchoolEnController,
+                                                      hintText: 'TypeSchool En',
+                                                      mixLine: 1,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ) );
 
-                                },
-                                child:const  Text('Edit'),
+                                      },
+                                      child:const  Text('Edit'),
+                                    ),
+                                  ),),
+                                  Expanded(child:  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                    child: ElevatedButton(
+                                      onPressed: (){
+                                        dialogDelete(context: context,fct: (){});
+                                      },
+                                      style: ButtonStyle(
+                                        backgroundColor: MaterialStateProperty.all(Colors.red),
+                                      ),
+                                      child:const  Text('Delete'),
+                                    ),
+                                  ),),
+                                ],
                               ),
-                            ),),
-                            Expanded(child:  Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                              child: ElevatedButton(
-                                onPressed: (){
-                                  dialogDelete(context: context,fct: (){});
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(Colors.red),
-                                ),
-                                child:const  Text('Delete'),
-                              ),
-                            ),),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                } )
+                            ],
+                          ),
+                        );
+                      } ),
+                ),
+              ],
+            )
         ),)
       ],
     );
