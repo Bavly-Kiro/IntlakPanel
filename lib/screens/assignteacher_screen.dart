@@ -2,6 +2,7 @@
 import 'package:intlakpanel/widget/buttons.dart';
 import 'package:intlakpanel/widget/helper.dart';
 import 'package:flutter/material.dart';
+import 'package:intlakpanel/widget/selected_textform.dart';
 
 import '../units/constants.dart';
 class AssignAndTeacherScreen extends StatefulWidget {
@@ -23,12 +24,12 @@ class _AssignAndTeacherScreenState extends State<AssignAndTeacherScreen> {
   var editFormKey=GlobalKey<FormState>();
   bool isAdd=true;
 
-  bool isEdit=false;
+  bool isShow=false;
 
   void changeAdd(){
     setState(() {
       isAdd=true;
-      isEdit=false;
+      isShow=false;
     });
 
   }
@@ -36,7 +37,7 @@ class _AssignAndTeacherScreenState extends State<AssignAndTeacherScreen> {
   void changeEdit(){
     setState(() {
       isAdd=false;
-      isEdit=true;
+      isShow=true;
     });
   }
 
@@ -74,7 +75,7 @@ class _AssignAndTeacherScreenState extends State<AssignAndTeacherScreen> {
               const SizedBox(width: 10,),
               ElevatedButton(
                 onPressed: changeEdit,
-                child:const  Text('Edit'),
+                child:const  Text('Show'),
               ),
             ],
           ),
@@ -88,200 +89,53 @@ class _AssignAndTeacherScreenState extends State<AssignAndTeacherScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        controller: subjectController,
-                        maxLines: 1,
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 20
-                        ),
-                        validator: (value){
-                          if(value!.isEmpty){
-                            return 'Please Enter The date';
-                          }
-                          return null;
-                        },
-                        decoration:   InputDecoration(
-                            hintText: 'Subject',
-                            hintStyle:   const TextStyle(
-                                color: Colors.black,
-                                fontSize: 20
-                            ),
-                            suffixIcon: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                    ),
-                                    onChanged: (value) {},
-                                    hint: const Text('Select '),
-                                    items: [
-                                      ...subject.map((e){
-                                        return DropdownMenuItem(
-                                          value: e,
-                                          onTap: (){
-                                            setState(() {
-                                              value=e;
-                                              subjectController.text=e;
-                                            });
-                                          },
-                                          child:   Text(e),
-                                        );
-
-                                      }),
-                                    ]
-                                ),
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                    color: Colors.grey,
-                                    width: 1
-                                )
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide:  BorderSide(
-                                    color: mainColor,
-                                    width: 1
-                                )
-                            )
-                        ),
-                      ),
+                    SelectedFormFiled(
+                      hintText:'Subject' ,
+                      controller:subjectController ,
+                      list: [ ...subject.map((e){
+                        return DropdownMenuItem(
+                          value: e,
+                          onTap: (){
+                            setState(() {
+                              value=e;
+                              subjectController.text=e;
+                            });
+                          },
+                          child:   Text(e),
+                        );
+                      })],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        controller: teacherController,
-                        maxLines: 1,
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 20
-                        ),
-                        validator: (value){
-                          if(value!.isEmpty){
-                            return 'Please Enter The date';
-                          }
-                          return null;
-                        },
-                        decoration:   InputDecoration(
-                            hintText: 'Teacher',
-                            hintStyle:   const TextStyle(
-                                color: Colors.black,
-                                fontSize: 20
-                            ),
-                            suffixIcon: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                    ),
-                                    onChanged: (value) {},
-                                    hint: const Text('Select '),
-                                    items: [
-                                      ...teacher.map((e){
-                                        return DropdownMenuItem(
-                                          value: e,
-                                          onTap: (){
-                                            setState(() {
-                                              value=e;
-                                              teacherController.text=e;
-                                            });
-                                          },
-                                          child:   Text(e),
-                                        );
-
-                                      }),
-                                    ]
-                                ),
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: const BorderSide(
-                                    color: Colors.grey,
-                                    width: 1
-                                )
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide:  BorderSide(
-                                    color: mainColor,
-                                    width: 1
-                                )
-                            )
-                        ),
-                      ),
+                    SelectedFormFiled(
+                      hintText:'Teacher' ,
+                      controller:teacherController ,
+                      list: [ ...teacher.map((e){
+                        return DropdownMenuItem(
+                          value: e,
+                          onTap: (){
+                            setState(() {
+                              value=e;
+                              teacherController.text=e;
+                            });
+                          },
+                          child:   Text(e),
+                        );
+                      })],
                     ),
-                    TextFormField(
-                      controller: typeSchoolController,
-                      maxLines: 1,
-                      style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 20
-                      ),
-                      validator: (value){
-                        if(value!.isEmpty){
-                          return 'Please Enter The date';
-                        }
-                        return null;
-                      },
-                      decoration:   InputDecoration(
-                          hintText: 'Type School',
-                          hintStyle:   const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20
-                          ),
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton<String>(
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18,
-                                  ),
-                                  onChanged: (value) {},
-                                  hint: const Text('Select '),
-                                  items: [
-                                    ...typeSchool.map((e){
-                                      return DropdownMenuItem(
-                                        value: e,
-                                        onTap: (){
-                                          setState(() {
-                                            value=e;
-                                            typeSchoolController.text=e;
-                                          });
-                                        },
-                                        child:   Text(e),
-                                      );
-
-                                    }),
-                                  ]
-                              ),
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: const BorderSide(
-                                  color: Colors.grey,
-                                  width: 1
-                              )
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide:  BorderSide(
-                                  color: mainColor,
-                                  width: 1
-                              )
-                          )
-                      ),
+                    SelectedFormFiled(
+                      hintText:'Type School' ,
+                      controller:typeSchoolController ,
+                      list: [ ...typeSchool.map((e){
+                        return DropdownMenuItem(
+                          value: e,
+                          onTap: (){
+                            setState(() {
+                              value=e;
+                              typeSchoolController.text=e;
+                            });
+                          },
+                          child:   Text(e),
+                        );
+                      })],
                     ),
                     const SizedBox(height: 10,),
                     MaButton(name: 'Update',
@@ -449,197 +303,57 @@ class _AssignAndTeacherScreenState extends State<AssignAndTeacherScreen> {
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             children: [
-                                              TextFormField(
-                                                controller: editSubjectController,
-                                                maxLines: 1,
-                                                style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20
-                                                ),
-                                                validator: (value){
-                                                  if(value!.isEmpty){
-                                                    return 'Please Enter The date';
-                                                  }
-                                                  return null;
-                                                },
-                                                decoration:   InputDecoration(
-                                                    hintText: 'Subject',
-                                                    hintStyle:   const TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 20
-                                                    ),
-                                                    suffixIcon: Padding(
-                                                      padding: const EdgeInsets.all(8.0),
-                                                      child: DropdownButtonHideUnderline(
-                                                        child: DropdownButton<String>(
-                                                            style: const TextStyle(
-                                                              color: Colors.black,
-                                                              fontSize: 18,
-                                                            ),
-                                                            onChanged: (value) {},
-                                                            hint: const Text('Select '),
-                                                            items: [
-                                                              ...subject.map((e){
-                                                                return DropdownMenuItem(
-                                                                  value: e,
-                                                                  onTap: (){
-                                                                    setState(() {
-                                                                      value=e;
-                                                                      editSubjectController.text=e;
-                                                                    });
-                                                                  },
-                                                                  child:   Text(e),
-                                                                );
-
-                                                              }),
-                                                            ]
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    enabledBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(12),
-                                                        borderSide: const BorderSide(
-                                                            color: Colors.grey,
-                                                            width: 1
-                                                        )
-                                                    ),
-                                                    focusedBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(12),
-                                                        borderSide:  BorderSide(
-                                                            color: mainColor,
-                                                            width: 1
-                                                        )
-                                                    )
-                                                ),
+                                              SelectedFormFiled(
+                                                hintText:'Subject' ,
+                                                controller:editSubjectController ,
+                                                list: [ ...subject.map((e){
+                                                  return DropdownMenuItem(
+                                                    value: e,
+                                                    onTap: (){
+                                                      setState(() {
+                                                        value=e;
+                                                        editSubjectController.text=e;
+                                                      });
+                                                    },
+                                                    child:   Text(e),
+                                                  );
+                                                })],
                                               ),
-                                              const SizedBox(height: 10,),
-                                              TextFormField(
-                                                controller: editTeacherController,
-                                                maxLines: 1,
-                                                style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20
-                                                ),
-                                                validator: (value){
-                                                  if(value!.isEmpty){
-                                                    return 'Please Enter The date';
-                                                  }
-                                                  return null;
-                                                },
-                                                decoration:   InputDecoration(
-                                                    hintText: 'Teacher',
-                                                    hintStyle:   const TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 20
-                                                    ),
-                                                    suffixIcon: Padding(
-                                                      padding: const EdgeInsets.all(8.0),
-                                                      child: DropdownButtonHideUnderline(
-                                                        child: DropdownButton<String>(
-                                                            style: const TextStyle(
-                                                              color: Colors.black,
-                                                              fontSize: 18,
-                                                            ),
-                                                            onChanged: (value) {},
-                                                            hint: const Text('Select '),
-                                                            items: [
-                                                              ...teacher.map((e){
-                                                                return DropdownMenuItem(
-                                                                  value: e,
-                                                                  onTap: (){
-                                                                    setState(() {
-                                                                      value=e;
-                                                                      editTeacherController.text=e;
-                                                                    });
-                                                                  },
-                                                                  child:   Text(e),
-                                                                );
-
-                                                              }),
-                                                            ]
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    enabledBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(12),
-                                                        borderSide: const BorderSide(
-                                                            color: Colors.grey,
-                                                            width: 1
-                                                        )
-                                                    ),
-                                                    focusedBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(12),
-                                                        borderSide:  BorderSide(
-                                                            color: mainColor,
-                                                            width: 1
-                                                        )
-                                                    )
-                                                ),
+                                              SelectedFormFiled(
+                                                hintText:'Teacher' ,
+                                                controller:editTeacherController ,
+                                                list: [ ...teacher.map((e){
+                                                  return DropdownMenuItem(
+                                                    value: e,
+                                                    onTap: (){
+                                                      setState(() {
+                                                        value=e;
+                                                        editTeacherController.text=e;
+                                                      });
+                                                    },
+                                                    child:   Text(e),
+                                                  );
+                                                })],
                                               ),
-                                              const SizedBox(height: 10,),
-                                              TextFormField(
-                                                controller: editTypeSchoolController,
-                                                maxLines: 1,
-                                                style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20
-                                                ),
-                                                validator: (value){
-                                                  if(value!.isEmpty){
-                                                    return 'Please Enter The date';
-                                                  }
-                                                  return null;
-                                                },
-                                                decoration:   InputDecoration(
-                                                    hintText: 'Type School',
-                                                    hintStyle:   const TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 20
-                                                    ),
-                                                    suffixIcon: Padding(
-                                                      padding: const EdgeInsets.all(8.0),
-                                                      child: DropdownButtonHideUnderline(
-                                                        child: DropdownButton<String>(
-                                                            style: const TextStyle(
-                                                              color: Colors.black,
-                                                              fontSize: 18,
-                                                            ),
-                                                            onChanged: (value) {},
-                                                            hint: const Text('Select '),
-                                                            items: [
-                                                              ...typeSchool.map((e){
-                                                                return DropdownMenuItem(
-                                                                  value: e,
-                                                                  onTap: (){
-                                                                    setState(() {
-                                                                      value=e;
-                                                                      editTypeSchoolController.text=e;
-                                                                    });
-                                                                  },
-                                                                  child:   Text(e),
-                                                                );
-
-                                                              }),
-                                                            ]
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    enabledBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(12),
-                                                        borderSide: const BorderSide(
-                                                            color: Colors.grey,
-                                                            width: 1
-                                                        )
-                                                    ),
-                                                    focusedBorder: OutlineInputBorder(
-                                                        borderRadius: BorderRadius.circular(12),
-                                                        borderSide:  BorderSide(
-                                                            color: mainColor,
-                                                            width: 1
-                                                        )
-                                                    )
-                                                ),
+                                              SelectedFormFiled(
+                                                hintText:'TypeSchool' ,
+                                                controller:editTypeSchoolController ,
+                                                list: [ ...typeSchool.map((e){
+                                                  return DropdownMenuItem(
+                                                    value: e,
+                                                    onTap: (){
+                                                      setState(() {
+                                                        value=e;
+                                                        editTypeSchoolController.text=e;
+                                                      });
+                                                    },
+                                                    child:   Text(e),
+                                                  );
+                                                })],
                                               ),
+
+
+
 
                                             ],
                                           ),

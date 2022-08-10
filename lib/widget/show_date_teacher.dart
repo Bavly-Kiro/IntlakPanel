@@ -1,7 +1,6 @@
 
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:intlakpanel/units/constants.dart';
 import 'package:intlakpanel/widget/form_filed.dart';
 import 'package:intlakpanel/widget/helper.dart';
@@ -344,12 +343,12 @@ class _ShowDateTeacherState extends State<ShowDateTeacher> {
                                   TheFormFiled(
                                     controller:editDetailsArController,
                                     hintText: 'Details Ar',
-                                    mixLine: 1,
+                                    mixLine: 3,
                                   ),
                                   TheFormFiled(
                                     controller:editDetailsArController,
                                     hintText: 'Details En',
-                                    mixLine: 1,
+                                    mixLine: 3,
                                   ),
 
                                 ],
