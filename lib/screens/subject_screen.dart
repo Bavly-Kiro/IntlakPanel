@@ -129,8 +129,8 @@ class _SubjectScreenState extends State<SubjectScreen> {
   var formKey=GlobalKey<FormState>();
   var editFormKey=GlobalKey<FormState>();
 
-  bool isAdd=true;
-  bool isEdit=false;
+  bool isAdd=false;
+  bool isEdit=true;
   void changeAdd(){
     setState(() {
       isAdd=true;
@@ -347,8 +347,8 @@ class _ChapterScreenState extends State<ChapterScreen> {
   late final TextEditingController editChapterEnController=TextEditingController(text: '');
   var formKey=GlobalKey<FormState>();
   var editFormKey=GlobalKey<FormState>();
-  bool isAdd=true;
-  bool isEdit=false;
+  bool isAdd=false;
+  bool isEdit=true;
   void changeAdd(){
     setState(() {
       isAdd=true;
@@ -741,9 +741,8 @@ class _LessonScreenState extends State<LessonScreen> {
   late final TextEditingController editChapterController=TextEditingController(text: '');
   var formKey=GlobalKey<FormState>();
   var editFormKey=GlobalKey<FormState>();
-  bool isAdd=true;
-
-  bool isEdit=false;
+  bool isAdd=false;
+  bool isEdit=true;
 
   void changeAdd(){
     setState(() {
@@ -1306,8 +1305,7 @@ class _VideoScreenState extends State<VideoScreen> {
   late final TextEditingController subjectController=TextEditingController(text: '');
   late final TextEditingController chapterController=TextEditingController(text: '');
   late final TextEditingController lessonController=TextEditingController(text: '');
-
-
+  
   late final TextEditingController editVideoArController=TextEditingController(text: '');
   late final TextEditingController editVideoEnController=TextEditingController(text: '');
   late final TextEditingController editSubjectController=TextEditingController(text: '');
@@ -1315,9 +1313,8 @@ class _VideoScreenState extends State<VideoScreen> {
   late final TextEditingController editLessonController=TextEditingController(text: '');
   var editFormKey=GlobalKey<FormState>();
 
-  bool isAdd=true;
-
-  bool isEdit=false;
+  bool isAdd=false;
+  bool isEdit=true;
 
   void changeAdd(){
     setState(() {

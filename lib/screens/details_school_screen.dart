@@ -131,8 +131,8 @@ class _CountryScreenState extends State<CountryScreen> {
   var formKey=GlobalKey<FormState>();
   var editFormKey=GlobalKey<FormState>();
 
-  bool isAdd=true;
-   bool isEdit=false;
+  bool isAdd=false;
+   bool isEdit=true;
    void changeAdd(){
      setState(() {
        isAdd=true;
@@ -503,8 +503,8 @@ class _MajorScreenState extends State<MajorScreen> {
   late final TextEditingController editMajorEnController=TextEditingController(text: '');
   var formKey=GlobalKey<FormState>();
   var editFormKey=GlobalKey<FormState>();
-  bool isAdd=true;
-  bool isEdit=false;
+  bool isAdd=false;
+  bool isEdit=true;
   void changeAdd(){
     setState(() {
       isAdd=true;
@@ -915,9 +915,8 @@ class _GradeScreenState extends State<GradeScreen> {
   late final TextEditingController editMajorController=TextEditingController(text: '');
   var formKey=GlobalKey<FormState>();
   var editFormKey=GlobalKey<FormState>();
-  bool isAdd=true;
-
-  bool isEdit=false;
+  bool isAdd=false;
+  bool isEdit=true;
 
   void changeAdd(){
     setState(() {
@@ -1508,9 +1507,8 @@ class _TypeOfSchoolState extends State<TypeOfSchool> {
   late final TextEditingController editGradeController=TextEditingController(text: '');
   var editFormKey=GlobalKey<FormState>();
 
-  bool isAdd=true;
-
-  bool isEdit=false;
+  bool isAdd=false;
+  bool isEdit=true;
 
   void changeAdd(){
     setState(() {

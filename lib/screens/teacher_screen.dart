@@ -20,20 +20,20 @@ class TeacherScreen extends StatefulWidget {
 }
 
 class _TeacherScreenState extends State<TeacherScreen> {
-  bool isAddProfessor=true;
-  bool isEditProfessor=false;
+  bool isAdd=false;
+  bool isEdit=true;
   void changeAddCommittees(){
     setState(() {
-      isAddProfessor=true;
-      isEditProfessor=false;
+      isAdd=true;
+      isEdit=false;
     });
 
   }
 
   void changeEditCommittees(){
     setState(() {
-      isAddProfessor=false;
-      isEditProfessor=true;
+      isAdd=false;
+      isEdit=true;
     });
   }
 
@@ -77,7 +77,7 @@ class _TeacherScreenState extends State<TeacherScreen> {
         SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(30),
-            child: isAddProfessor?
+            child: isAdd?
             const AddTeacher():const EditProfessor(),
           ),
         ),)
