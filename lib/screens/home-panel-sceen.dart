@@ -237,7 +237,7 @@ class _HomePanelScreenState extends State<HomePanelScreen> {
             isTeacher? TeacherScreen():
             isRateReport? const  RateReportScreen():
             iSales? const  SalesScreen():
-            isExam? const  ExamScreen():
+            isExam?   Container():
             isAnalyses? const  AnalysesScreen():
             isSubject? const  MainSubjectScreen():
             isAssignAndTeacher? const  AssignAndTeacherScreen():
